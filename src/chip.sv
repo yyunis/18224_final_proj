@@ -13,6 +13,9 @@ module my_chip (
     reg [15:0] real_num [0:15];
     reg [15:0] imag [0:15];
     reg [3:0] peak_bin;
+    reg [31:0] best;
+    reg [3:0] best_bin;
+    reg[31:0] temp_mag;
 
     // INPUT: microcontroller sends samples from mic
     // OUTPUT: output is the frequency bin --> calculation of peak frequency + MIDI note done on microcontroller
@@ -40,9 +43,9 @@ module my_chip (
                     // MAGNITUDE COMPUTATION
                     // STEP 3: Magnitude of bins
                     // Calculate magnitudes of each bin
-                    reg [31:0] best = 0;
-                    reg [3:0] best_bin = 0;
-                    reg[31:0] temp_mag = 0;
+                    best = 0;
+                    best_bin = 0;
+                    temp_mag = 0;
                     for (integer i = 0; i < 16; i = i + 1) begin
                         temp_mag = real_num[i]*real_num[i] + imag[i]*imag[i];
                         if (temp_mag > best) begin
