@@ -17,10 +17,19 @@ module my_chip (
     reg [3:0] best_bin;
     reg[31:0] temp_mag;
     logic keep_output;
+    logic fft_start;
+
+    fft fft1(
+        .clk(clock),
+        .start(fft_start),
+        .done(fft_done),
+        .din(buffer),
+        .real_n(real_num),
+        .imag(imag)
+    );
 
     // INPUT: microcontroller sends samples from mic
     // OUTPUT: output is the frequency bin --> calculation of peak frequency + MIDI note done on microcontroller
-
     always @(posedge clock, posedge reset) begin
         // if reset, set counter to 0
         if (reset) begin
@@ -33,13 +42,17 @@ module my_chip (
         end else begin
             // STEP 1: Buffer to collect samples from microcontroller
             if (!buffer_full) begin
-                buffer[buffer_index] <= io_in[7:0];
-                if (!top_half) buffer_index <= buffer_index + 1;
-                else buffer[buffer_index] <= buffer[buffer_index] << 8;
+                if (!top_half) begin
+                    buffer[buffer_index] <= buffer[buffer_index] << 8;
+                    buffer[buffer_index] <= io_in[7:0];
+                    buffer_index <= buffer_index + 1;
+                end
+                else buffer[buffer_index] <= io_in[7:0];
                 if (buffer_index == 15) buffer_full <= 1;
                 top_half <= ~top_half;
             end
             if (buffer_full) begin
+                fft_start <= 1;
                 if (fft_done) begin
                     // MAGNITUDE COMPUTATION
                     // STEP 3: Magnitude of bins
@@ -62,21 +75,29 @@ module my_chip (
                         buffer[i] <= 16'd0;
                     end
                     fft_done <= 0;
+                    fft_start <= 0;
                     keep_output <= 1;
                 end
                 else begin
                     keep_output <= 0;
-                    // fft here
                 end
             end
         end
     end
 
-    // STEP 2: FFT --> conversation with ChatGPT about tasks and basic FFT
-    // Outputs the real and imaginary bins
-    // task fft_task(input [15:0] buf [0:15], output [15:0] real_fft [0:15], output [15:0] imag_fft [0:15]);
-    // endtask
-
     assign io_out[3:0] = (keep_output) ? peak_bin : 0;
 
+endmodule
+
+    // STEP 2: FFT --> used ChatGPT to understand basic FFT and necessary components
+    // Outputs values in the real and imaginary bins, used for magnitude computation
+module fft(
+    input logic clk,
+    input logic start,
+    input logic [15:0] din [0:15],
+    output logic done,
+    output logic [15:0] real_n [0:15],
+    output logic [15:0] imag [0:15]
+    );
+    
 endmodule
