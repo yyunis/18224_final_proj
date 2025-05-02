@@ -16,6 +16,7 @@ module my_chip (
     reg [31:0] best;
     reg [3:0] best_bin;
     reg[31:0] temp_mag;
+    logic keep_output;
 
     // INPUT: microcontroller sends samples from mic
     // OUTPUT: output is the frequency bin --> calculation of peak frequency + MIDI note done on microcontroller
