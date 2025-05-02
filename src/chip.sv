@@ -24,9 +24,7 @@ module my_chip (
             buffer_full <= 0;
             top_half <= 1;
             for (integer i = 0; i < 16; i = i + 1) begin
-                for (integer j = 0; j < 16; j = j + 1) begin
-                    buffer[i][j] <= 0;
-                end
+                buffer[i] <= 16'd0;
             end
         end else begin
             // STEP 1: Buffer to collect samples from microcontroller
@@ -57,16 +55,14 @@ module my_chip (
                     buffer_full <= 0;
                     top_half <= 1;
                     for (integer i = 0; i < 16; i = i + 1) begin
-                        for (integer j = 0; j < 16; j = j + 1) begin
-                            buffer[i][j] <= 0;
-                        end
+                        buffer[i] <= 16'd0;
                     end
                     fft_done <= 0;
                     keep_output <= 1;
                 end
                 else begin
                     keep_output <= 0;
-                    fft_task(buffer, real_num, imag);
+                    // fft here
                 end
             end
         end
@@ -74,8 +70,8 @@ module my_chip (
 
     // STEP 2: FFT --> conversation with ChatGPT about tasks and basic FFT
     // Outputs the real and imaginary bins
-    task fft_task(input [15:0] buf [0:15], output [15:0] real_fft [0:15], output [15:0] imag_fft [0:15]);
-    endtask
+    // task fft_task(input [15:0] buf [0:15], output [15:0] real_fft [0:15], output [15:0] imag_fft [0:15]);
+    // endtask
 
     assign io_out[3:0] = (keep_output) ? peak_bin : 0;
 
