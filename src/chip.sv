@@ -74,7 +74,6 @@ module my_chip (
                     for (integer i = 0; i < 16; i = i + 1) begin
                         buffer[i] <= 16'd0;
                     end
-                    fft_done <= 0;
                     fft_start <= 0;
                     keep_output <= 1;
                 end
@@ -99,5 +98,9 @@ module fft(
     output logic [15:0] real_n [0:15],
     output logic [15:0] imag [0:15]
     );
-    
+
+    assign done = 1;
+    assign real_n = 0;
+    assign imag = 0;
+
 endmodule
