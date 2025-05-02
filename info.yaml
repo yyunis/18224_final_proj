@@ -13,9 +13,9 @@ project:
 #
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
-  author:       "PLACEHOLDER"      # Your name
+  author:       "Eunice Lee"      # Your name
   discord:      ""      # Your discord handle
-  title:        "PLACEHOLDER"      # Project title
+  title:        "FreqFinder"      # Project title
   description:  "PLACEHOLDER"      # Short description of what your project does
   how_it_works: "PLACEHOLDER"      # Longer description of how the project works
   how_to_test:  "PLACEHOLDER"      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
