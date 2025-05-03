@@ -92,14 +92,17 @@ endmodule
 module fft(
     input logic clk,
     input logic start,
-    input reg [15:0] din [0:15],
+    input wire [15:0] din [0:15],
     output logic done,
-    output reg [15:0] real_n [0:15],
-    output reg [15:0] imag [0:15]
+    output wire [15:0] real_n [0:15],
+    output wire [15:0] imag [0:15]
     );
+     
+    always @(posedge clk) begin
 
-    assign done = 1;
-    assign real_n = 1;
-    assign imag = 1;
+        done <= start;
+        real_n <= din;
+        imag <= din;
+    end
 
 endmodule
