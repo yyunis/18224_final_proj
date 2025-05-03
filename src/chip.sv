@@ -92,10 +92,10 @@ endmodule
 module fft(
     input logic clk,
     input logic start,
-    input logic [15:0] din [0:15],
+    input reg [15:0] din [0:15],
     output logic done,
-    output logic [15:0] real_n [0:15],
-    output logic [15:0] imag [0:15]
+    output reg [15:0] real_n [0:15],
+    output reg [15:0] imag [0:15]
     );
 
     assign done = 1;
