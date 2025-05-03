@@ -112,4 +112,9 @@ module fft(
         end
     end
 
+    // Reverse bits
+    // Use twiddle factors
+    // Need to divide + conquer to find values to sum
+    // Issue: 16-FFT may be too big
+
 endmodule : fft
