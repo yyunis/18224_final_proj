@@ -85,17 +85,17 @@ module my_chip (
 
     assign io_out[3:0] = (keep_output) ? peak_bin : 0;
 
-endmodule
+endmodule : my_chip
 
     // STEP 2: FFT --> used ChatGPT to understand basic FFT and necessary components
     // Outputs values in the real and imaginary bins, used for magnitude computation
 module fft(
     input logic clk,
     input logic start,
-    input wire [15:0] din [0:15],
+    input reg [15:0] din [0:15],
     output logic done,
-    output wire [15:0] real_n [0:15],
-    output wire [15:0] imag [0:15]
+    output reg [15:0] real_n [0:15],
+    output reg [15:0] imag [0:15]
     );
      
     always @(posedge clk) begin
@@ -105,4 +105,4 @@ module fft(
         imag <= din;
     end
 
-endmodule
+endmodule : fft
