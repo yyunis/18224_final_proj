@@ -104,7 +104,6 @@ module fft(
     always @(posedge clk) begin
         if (start) begin
             done <= 1;
-            // Copy inputs to real outputs, set imaginary to zero
             real_n <= din;
             imag <= 16'd0;
         end else begin
@@ -112,9 +111,15 @@ module fft(
         end
     end
 
+    // STEPS needed
+
     // Reverse bits
     // Use twiddle factors
     // Need to divide + conquer to find values to sum
     // Issue: 16-FFT may be too big
+
+    // However, need a minimum of 16-FFT because a larger frequency differentiation  
+        // is needed to distinguish enough notes
+        // Difficult to figure out memory constraints for large buffer
 
 endmodule : fft
