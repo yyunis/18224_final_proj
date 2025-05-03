@@ -100,7 +100,7 @@ module fft(
     );
 
     assign done = 1;
-    assign real_n = 0;
-    assign imag = 0;
+    assign real_n = 1;
+    assign imag = 1;
 
 endmodule
