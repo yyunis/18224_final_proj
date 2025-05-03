@@ -43,8 +43,7 @@ module my_chip (
             // STEP 1: Buffer to collect samples from microcontroller
             if (!buffer_full) begin
                 if (!top_half) begin
-                    buffer[buffer_index] <= buffer[buffer_index] << 8;
-                    buffer[buffer_index] <= io_in[7:0];
+                    buffer[buffer_index] <= (buffer[buffer_index] << 8) | io_in[7:0];
                     buffer_index <= buffer_index + 1;
                 end
                 else buffer[buffer_index] <= io_in[7:0];
